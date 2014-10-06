@@ -4,3 +4,5 @@ function Chart () {
         return data;
     };
 }
+
+$("#bodycontainer").html("Charts goes here.");
