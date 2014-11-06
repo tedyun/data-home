@@ -4,3 +4,11 @@ function Chart () {
         return data;
     };
 }
+
+function Layout() {
+  return false;
+}
+
+function TableLayout() {
+  return false;
+}
