@@ -11,3 +11,7 @@ jsx.extend = function (subClass, baseClass){
 jsx.isNull = function (obj) {
     return obj === undefined || obj === null;
 };
+
+jsx.clone = function (obj) {
+    return $.extend(true, {}, obj);
+};
