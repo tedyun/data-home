@@ -7,3 +7,7 @@ jsx.extend = function (subClass, baseClass){
     subClass.baseConstructor = baseClass;
     subClass.superClass = baseClass.prototype;
 };
+
+jsx.isNull = function (obj) {
+    return obj === undefined || obj === null;
+};
