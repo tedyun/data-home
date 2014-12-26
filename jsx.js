@@ -1,3 +1,6 @@
+// Copyright (c) 2014, Taedong Yun.
+// All rights reserved.
+
 var jsx = {};
 jsx.extend = function (subClass, baseClass){
     function Inheritance() { }

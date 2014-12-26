@@ -1,3 +1,6 @@
+// Copyright (c) 2014, Taedong Yun.
+// All rights reserved.
+
 var chartdata1 = {
     title: {
         text: 'Monthly Average Temperature',

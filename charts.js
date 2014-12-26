@@ -1,6 +1,11 @@
+// Copyright (c) 2014, Taedong Yun.
+// All rights reserved.
+
 function Chart () {
     var _data = null;
     var _container = null;
+    var _categories = null;
+    var _dataSeries = [];
 
     this.data = function () {
         if (arguments.length) {
@@ -10,6 +15,7 @@ function Chart () {
             return _data;
         }
     };
+
     this.container = function () {
         if (arguments.length) {
             _container = arguments[0];
@@ -18,6 +24,19 @@ function Chart () {
             return _container;
         }
     };
+
+    this.categories = function () {
+        // TODO
+    };
+
+    this.refreshSeries = function () {
+        _dataSeries = [];
+    };
+
+    this.addSeries = function () {
+        // TODO
+    };
+
     this.render = function () {
         console.log("Cannot call render on this chart base class");
     };
