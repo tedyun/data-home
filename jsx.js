@@ -19,14 +19,23 @@ jsx.isNull = function (obj) {
     return obj === undefined || obj === null;
 };
 
+jsx.isPrimitive = function (obj) {
+    return typeof obj === "number" || typeof obj === "string" || typeof obj === "boolean";
+};
+
 jsx.setProperty = function (obj, aPropertyChain, value) {
     if (aPropertyChain.length > 1) {
         var aNextPropertyChain = aPropertyChain.slice(1, aPropertyChain.length);
-        if (jsx.isNull(obj[aPropertyChain[0]])) {
-            obj[aPropertyChain[0]] = jsx.setProperty({},
+        var sFirstProp = aPropertyChain[0];
+        if (jsx.isNull(obj[sFirstProp])) {
+            obj[sFirstProp] = jsx.setProperty({},
+                aNextPropertyChain, value);
+        } else if (jsx.isPrimitive(obj[sFirstProp])) {
+            console.log("Error in jsx.setProperty. A primitive value is overwritten.");
+            obj[sFirstProp] = jsx.setProperty({},
                 aNextPropertyChain, value);
         } else {
-            obj[aPropertyChain[0]] = jsx.setProperty(obj[aPropertyChain[0]],
+            obj[sFirstProp] = jsx.setProperty(obj[aPropertyChain[0]],
                 aNextPropertyChain, value);
         }
         return obj;
