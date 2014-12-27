@@ -9,30 +9,30 @@ function ChartDataModel (oJsonData) {
         for (var sProp in _jsonData) {
             switch (sProp) {
                 case "categories":
-                    jsx.setProperty(oHighChartData, ["xAxis", "categories"],
+                    jsy.setProperty(oHighChartData, ["xAxis", "categories"],
                         _jsonData[sProp]);
                     break;
                 case "categoryLabel":
-                    jsx.setProperty(oHighChartData, ["xAxis", "title", "text"],
+                    jsy.setProperty(oHighChartData, ["xAxis", "title", "text"],
                         _jsonData[sProp]);
                     break;
                 case "valueSeries" :
-                    jsx.setProperty(oHighChartData, ["series"],
+                    jsy.setProperty(oHighChartData, ["series"],
                         _jsonData[sProp]);
                     break;
                 case "valueLabel" :
-                    jsx.setProperty(oHighChartData, ["yAxis", "title", "text"],
+                    jsy.setProperty(oHighChartData, ["yAxis", "title", "text"],
                         _jsonData[sProp]);
                     break;
                 case "valueSuffix" :
-                    jsx.setProperty(oHighChartData, ["tooltip", "valueSuffix"],
+                    jsy.setProperty(oHighChartData, ["tooltip", "valueSuffix"],
                         _jsonData[sProp]);
                     break;
                 default :
                     console.log("Option " + sProp + " is not supported.");
             }
         }
-        return jsx.clone(oHighChartData);
+        return jsy.clone(oHighChartData);
     };
 }
 
@@ -54,10 +54,10 @@ function Chart () {
     
     this.option = function () {
         if (arguments.length > 1) {
-            _options[arguments[0]] = jsx.clone(arguments[1]);
+            _options[arguments[0]] = jsy.clone(arguments[1]);
             return this;
         } else if (arguments.length === 1) {
-            return jsx.clone(_options[arguments[0]]);
+            return jsy.clone(_options[arguments[0]]);
         } else {
             console.log("Must specify an option name.");
         }
@@ -114,7 +114,7 @@ function HighChart () {
         var oHighChartData = this.data().buildHighChartData();
         
         // set chart type
-        jsx.setProperty(oHighChartData, ["chart", "type"], this.type());
+        jsy.setProperty(oHighChartData, ["chart", "type"], this.type());
 
         // render high chart
         $(this.container())
@@ -123,25 +123,25 @@ function HighChart () {
             .highcharts(oHighChartData);
     };
 }
-jsx.extend(HighChart, Chart);
+jsy.extend(HighChart, Chart);
 
 function LineChart () {
     LineChart.baseConstructor.call(this);
     this.type("line");
 }
-jsx.extend(LineChart, HighChart);
+jsy.extend(LineChart, HighChart);
 
 function AreaChart () {
     AreaChart.baseConstructor.call(this);
     this.type("area");
 }
-jsx.extend(AreaChart, HighChart);
+jsy.extend(AreaChart, HighChart);
 
 function BarChart () {
     BarChart.baseConstructor.call(this);
     this.type("bar");
 }
-jsx.extend(BarChart, HighChart);
+jsy.extend(BarChart, HighChart);
 
 function Layout() {
   return false;
