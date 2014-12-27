@@ -11,10 +11,29 @@ jsx.extend = function (subClass, baseClass){
     subClass.superClass = baseClass.prototype;
 };
 
+jsx.clone = function (obj) {
+    return $.extend(true, {}, obj);
+};
+
 jsx.isNull = function (obj) {
     return obj === undefined || obj === null;
 };
 
-jsx.clone = function (obj) {
-    return $.extend(true, {}, obj);
+jsx.setProperty = function (obj, aPropertyChain, value) {
+    if (aPropertyChain.length > 1) {
+        var aNextPropertyChain = aPropertyChain.slice(1, aPropertyChain.length);
+        if (jsx.isNull(obj[aPropertyChain[0]])) {
+            obj[aPropertyChain[0]] = jsx.setProperty({},
+                aNextPropertyChain, value);
+        } else {
+            obj[aPropertyChain[0]] = jsx.setProperty(obj[aPropertyChain[0]],
+                aNextPropertyChain, value);
+        }
+        return obj;
+    } else if (aPropertyChain.length === 1) {
+        obj[aPropertyChain[0]] = value;
+        return obj;
+    } else {
+        console.log("Error in jsx.setProperty.");
+    }
 };

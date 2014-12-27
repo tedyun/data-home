@@ -1,7 +1,43 @@
 // Copyright (c) 2014, Taedong Yun.
 // All rights reserved.
 
+function ChartDataModel (oJsonData) {
+    var _jsonData = oJsonData;
+    
+    this.buildHighChartData = function () {
+        var oHighChartData = {};
+        for (var sProp in _jsonData) {
+            switch (sProp) {
+                case "categories":
+                    jsx.setProperty(oHighChartData, ["xAxis", "categories"],
+                        _jsonData[sProp]);
+                    break;
+                case "categoryLabel":
+                    jsx.setProperty(oHighChartData, ["xAxis", "title", "text"],
+                        _jsonData[sProp]);
+                    break;
+                case "valueSeries" :
+                    jsx.setProperty(oHighChartData, ["series"],
+                        _jsonData[sProp]);
+                    break;
+                case "valueLabel" :
+                    jsx.setProperty(oHighChartData, ["yAxis", "title", "text"],
+                        _jsonData[sProp]);
+                    break;
+                case "valueSuffix" :
+                    jsx.setProperty(oHighChartData, ["tooltip", "valueSuffix"],
+                        _jsonData[sProp]);
+                    break;
+                default :
+                    console.log("Option " + sProp + " is not supported.");
+            }
+        }
+        return jsx.clone(oHighChartData);
+    };
+}
+
 function Chart () {
+    var _options = {};
     var _data = null;
     var _container = null;
     var _categories = null;
@@ -9,10 +45,21 @@ function Chart () {
 
     this.data = function () {
         if (arguments.length) {
-            _data = arguments[0];
+            _data = new ChartDataModel(arguments[0]);
             return this;
         } else {
             return _data;
+        }
+    };
+    
+    this.option = function () {
+        if (arguments.length > 1) {
+            _options[arguments[0]] = jsx.clone(arguments[1]);
+            return this;
+        } else if (arguments.length === 1) {
+            return jsx.clone(_options[arguments[0]]);
+        } else {
+            console.log("Must specify an option name.");
         }
     };
 
@@ -64,18 +111,16 @@ function HighChart () {
             return;
         }
 
+        var oHighChartData = this.data().buildHighChartData();
+        
         // set chart type
-        if (jsx.isNull(this.data().chart)) {
-            this.data().chart = { type: this.type() };
-        } else {
-            this.data().chart.type = this.type();
-        }
+        jsx.setProperty(oHighChartData, ["chart", "type"], this.type());
 
         // render high chart
         $(this.container())
             .width(800)
             .height(600)
-            .highcharts(this.data());
+            .highcharts(oHighChartData);
     };
 }
 jsx.extend(HighChart, Chart);
@@ -114,6 +159,10 @@ chartfactory.createChart = function (sChartType, oData, elContainer) {
         area: AreaChart,
         bar: BarChart
     };
+    
+    if (typeof elContainer === "string") {
+        elContainer = document.getElementById(elContainer);
+    }
 
     if (oChartClasses.hasOwnProperty(sChartType)) {
         var oChart = new oChartClasses[sChartType] ();
