@@ -15,7 +15,7 @@ datautils.parseTable = function (sFileType, sDataURL, sCategoryKey, sValueKey, f
         for (var i = 0; i < aRowArray.length; i++) {
             var oRow = aRowArray[i];
             aCategories.push(oRow[sCategoryKey]);
-            aValueSeries.push(oRow[sValueKey]);
+            aValueSeries.push(+oRow[sValueKey]);
         }
         var oFormatted = {
             categoryLabel: sCategoryKey,

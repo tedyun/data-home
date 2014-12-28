@@ -91,9 +91,10 @@ var dataJSON = {
 //     }]
 // };
 
-datautils.parseTable('tsv', 'data.tsv', 'name', 'value', function(oFormattedData) {
-    console.log(oFormattedData);
+datautils.parseTable('tsv', 'data.tsv', 'Name', 'Value', function(oFormattedData) {
+    var chart1 = chartfactory.createChart("bar", oFormattedData, "chart1");
+    chart1.render();
 });
 
-var chart1 = chartfactory.createChart("line", dataJSON, "chart1");
-chart1.render();
+// var chart1 = chartfactory.createChart("line", dataJSON, "chart1");
+// chart1.render();
