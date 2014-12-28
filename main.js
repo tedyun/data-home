@@ -91,5 +91,9 @@ var dataJSON = {
 //     }]
 // };
 
+datautils.parseTable('tsv', 'data.tsv', 'name', 'value', function(oFormattedData) {
+    console.log(oFormattedData);
+});
+
 var chart1 = chartfactory.createChart("line", dataJSON, "chart1");
 chart1.render();
