@@ -1,6 +1,15 @@
 var datautils = {};
 
-datautils.parseTable = function (sFileType, sDataURL, sCategoryKey, sValueKey, fCallback) {
+/**
+ * Parse csv/tsv table
+ * @param {string}
+ * @param {string}
+ * @param {string}
+ * @param {array|string}
+ * @param {string}
+ * @param {function}
+ */
+datautils.parseTable = function (sFileType, sDataURL, sCategoryKey, aValueKeys, sValueLabel, fCallback) {
     var oGetters = {
         "tsv": d3.tsv,
         "csv": d3.csv
@@ -9,22 +18,46 @@ datautils.parseTable = function (sFileType, sDataURL, sCategoryKey, sValueKey, f
         console.log("Error in datautils.parseTable.");
         return;
     }
+    
+    if (typeof aValueKeys === "string") {
+        aValueKeys = [aValueKeys];
+    }
+    
     (oGetters[sFileType])(sDataURL, function (aRowArray) {
         var aCategories = [];
         var aValueSeries = [];
-        for (var i = 0; i < aRowArray.length; i++) {
+        var i = 0, j = 0;
+        
+        // initialize value series array
+        for (j = 0; j < aValueKeys.length; j++) {
+            aValueSeries.push({
+                name: aValueKeys[j],
+                data: []
+            });
+        }
+        
+        for (i = 0; i < aRowArray.length; i++) {
             var oRow = aRowArray[i];
+            
+            // save category data
             aCategories.push(oRow[sCategoryKey]);
-            aValueSeries.push(+oRow[sValueKey]);
+            
+            // save value data
+            for (j = 0; j < aValueKeys.length; j++) {
+                var sValueKey = aValueKeys[j];
+                aValueSeries[j].data.push(datautils.convertToNumber(oRow[sValueKey]));
+            }
         }
         var oFormatted = {
             categoryLabel: sCategoryKey,
             categories: aCategories,
-            valueSeries: [{
-                name: sValueKey,
-                data: aValueSeries
-            }]
+            valueSeries: aValueSeries,
+            valueLabel: sValueLabel
         };
         fCallback(oFormatted);
     });
+};
+
+datautils.convertToNumber = function (sInput) {
+    return +sInput.replace(/[^0123456789\.]/g, "");
 };

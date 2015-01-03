@@ -91,8 +91,13 @@ var dataJSON = {
 //     }]
 // };
 
-datautils.parseTable('tsv', 'data.tsv', 'Name', 'Value', function(oFormattedData) {
-    var chart1 = chartfactory.createChart("bar", oFormattedData, "chart1");
+// datautils.parseTable('tsv', 'data.tsv', 'Name', 'Value', function(oFormattedData) {
+//     var chart1 = chartfactory.createChart("bar", oFormattedData, "chart1");
+//     chart1.render();
+// });
+
+datautils.parseTable('csv', 'gasdata.csv', 'date', ['price per gallon', 'mileage'], 'gas price and mileage', function(oFormattedData) {
+    var chart1 = chartfactory.createChart("line", oFormattedData, "chart1");
     chart1.render();
 });
 
