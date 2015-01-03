@@ -58,6 +58,8 @@ datautils.parseTable = function (sFileType, sDataURL, sCategoryKey, aValueKeys, 
     });
 };
 
+/**  Convert string to number. Return null if conversion fails. */
 datautils.convertToNumber = function (sInput) {
-    return +sInput.replace(/[^0123456789\.]/g, "");
+    var nOutput = parseFloat(sInput.replace(/[^0123456789\.]/g, ""));
+    return isNaN(nOutput)? null : nOutput;
 };
