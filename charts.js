@@ -1,9 +1,18 @@
 // Copyright (c) 2014, Taedong Yun.
 // All rights reserved.
 
+
+/**
+ * Chart data model class
+ * @contructor
+ */
 function ChartDataModel (oJsonData) {
     var _jsonData = oJsonData;
     
+    /**
+     * Hich chart data
+     * @return {object} high chart data object
+     */
     this.buildHighChartData = function () {
         var oHighChartData = {};
         for (var sProp in _jsonData) {
@@ -36,6 +45,10 @@ function ChartDataModel (oJsonData) {
     };
 }
 
+/**
+ * Chart class
+ * @contructor
+ */
 function Chart () {
     var _options = {};
     var _data = null;
@@ -43,6 +56,9 @@ function Chart () {
     var _categories = null;
     var _dataSeries = [];
 
+    /**
+     * Get/set data
+     */
     this.data = function () {
         if (arguments.length) {
             _data = new ChartDataModel(arguments[0]);
@@ -52,6 +68,9 @@ function Chart () {
         }
     };
     
+    /**
+     * Get/set option
+     */
     this.option = function () {
         if (arguments.length > 1) {
             _options[arguments[0]] = jsy.clone(arguments[1]);
@@ -63,6 +82,9 @@ function Chart () {
         }
     };
 
+    /**
+     * Get/set container
+     */
     this.container = function () {
         if (arguments.length) {
             _container = arguments[0];
@@ -89,10 +111,18 @@ function Chart () {
     };
 }
 
+/**
+ * HighChart class
+ * @contructor
+ */
 function HighChart () {
     HighChart.baseConstructor.call(this);
 
     var _type = null;
+    
+    /**
+     * Get/set type
+     */
     this.type = function () {
         if (arguments.length) {
             _type = arguments[0];
@@ -102,6 +132,9 @@ function HighChart () {
         }
     };
 
+    /**
+     * Render chart
+     */
     this.render = function () {
         if (!this.data()) {
             console.log("No data for this line chart.");
@@ -125,18 +158,30 @@ function HighChart () {
 }
 jsy.extend(HighChart, Chart);
 
+/**
+ * LineChart class
+ * @contructor
+ */
 function LineChart () {
     LineChart.baseConstructor.call(this);
     this.type("line");
 }
 jsy.extend(LineChart, HighChart);
 
+/**
+ * AreaChart class
+ * @contructor
+ */
 function AreaChart () {
     AreaChart.baseConstructor.call(this);
     this.type("area");
 }
 jsy.extend(AreaChart, HighChart);
 
+/**
+ * BarChart class
+ * @contructor
+ */
 function BarChart () {
     BarChart.baseConstructor.call(this);
     this.type("bar");
@@ -153,6 +198,12 @@ function TableLayout() {
 
 var chartfactory = {};
 
+/**
+ * Create a chart
+ * @param {string} chart type
+ * @param {object} data object
+ * @param {HTMLElement} HTML container
+ */
 chartfactory.createChart = function (sChartType, oData, elContainer) {
     var oChartClasses = {
         line: LineChart,
