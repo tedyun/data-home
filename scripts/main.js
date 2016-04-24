@@ -36,20 +36,29 @@ requirejs.config({
             deps: ['jquery'],
             exports: 'Highcharts'
         }
+    },
+    map: {
+        '*': {
+            'css': 'thirdparty/require-css/css.min'
+        }
     }
 });
 
 // start the main app logic
 requirejs([
     'jquery',
+    'knockout',
     'charts',
     'datautils',
-    'vega'
+    'vega',
+    'uifactory'
 ], function (
     $,
+    ko,
     charts,
     datautils,
-    vega
+    vega,
+    uifactory
 ) {
 
     var chartoption1 = {
@@ -201,5 +210,13 @@ requirejs([
         });
     }
     parseVegaSpec(oVegaSpecTest);
-
+    
+    var $buttonContainer = $(document.getElementById('buttonsContainer'));
+    uifactory.createButton(
+        $buttonContainer,
+        "button1",
+        "Click Here",
+        function () { alert("Button clicked."); }
+    );
+    ko.applyBindings(null, $buttonContainer.get(0));
 });
