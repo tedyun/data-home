@@ -12,7 +12,20 @@ requirejs.config({
         // is using jQuery 1.9.0 located at
         // js/lib/jquery-1.9.0.js, relative to
         // the HTML page.
-        jquery: 'thirdparty/jquery/jquery.min',
+
+        'knockout': 'thirdparty/oraclejet/js/libs/knockout/knockout-3.4.0',
+        'jquery': 'thirdparty/oraclejet/js/libs/jquery/jquery-2.1.3.min',
+        'jqueryui-amd': 'thirdparty/oraclejet/js/libs/jquery/jqueryui-amd-1.11.4.min',
+        'ojs': 'thirdparty/oraclejet/js/libs/oj/v2.0.1/min',
+        'ojL10n': 'thirdparty/oraclejet/js/libs/oj/v2.0.1/ojL10n',
+        'ojtranslations': 'thirdparty/oraclejet/js/libs/oj/v2.0.1/resources',
+        'text': 'thirdparty/oraclejet/js/libs/require/text',
+        'promise': 'thirdparty/oraclejet/js/libs/es6-promise/promise-1.0.0.min',
+        'hammerjs': 'thirdparty/oraclejet/js/libs/hammer/hammer-2.0.4.min',
+        'signals': 'thirdparty/oraclejet/js/libs/js-signals/signals.min',    
+        'ojdnd': 'thirdparty/oraclejet/js/libs/dnd-polyfill/dnd-polyfill-1.0.0.min',
+
+        // jquery: 'thirdparty/jquery/jquery.min',
         highcharts: 'thirdparty/highcharts/highcharts',
         d3: 'thirdparty/d3/d3.min',
         topojson: 'thirdparty/topojson/topojson.min',
