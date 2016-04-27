@@ -4,11 +4,15 @@
 define([
     'jquery',
     'jsy',
-    'highcharts'
+    'knockout',
+    'highcharts',
+    'uifactory'
 ], function (
     $,
     jsy,
-    hightcharts
+    ko,
+    hightcharts,
+    uifactory
 ) {
     /**
      * Chart data model class
@@ -50,6 +54,39 @@ define([
                 }
             }
             return jsy.clone(oHighChartData);
+        };
+        
+        /**
+         * Hich chart data
+         * @return {object} high chart data object
+         */
+        this.buildJETChartData = function () {
+            var oJETChartData = function () {};
+            for (var sProp in _jsonData) {
+                switch (sProp) {
+                    case "categories":
+                        oJETChartData.groups = ko.observableArray(_jsonData[sProp]);
+                        break;
+                    // case "categoryLabel":
+                    //     jsy.setProperty(oJETChartData, ["xAxis", "title", "text"],
+                    //         _jsonData[sProp]);
+                    //     break;
+                    case "valueSeries" :
+                        oJETChartData.series = ko.observableArray(_jsonData[sProp]);
+                        break;
+                    // case "valueLabel" :
+                    //     jsy.setProperty(oJETChartData, ["yAxis", "title", "text"],
+                    //         _jsonData[sProp]);
+                    //     break;
+                    // case "valueSuffix" :
+                    //     jsy.setProperty(oJETChartData, ["tooltip", "valueSuffix"],
+                    //         _jsonData[sProp]);
+                    //     break;
+                    default :
+                        console.log("Option " + sProp + " is not supported.");
+                }
+            }
+            return oJETChartData;
         };
     }
 

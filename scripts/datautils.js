@@ -67,6 +67,64 @@ define([
             fCallback(oFormatted);
         });
     };
+    
+    /**
+     * Parse csv/tsv table
+     * @param {string}
+     * @param {string}
+     * @param {string}
+     * @param {array|string}
+     * @param {string}
+     * @param {function}
+     */
+    datautils.parseTableForJET = function (sFileType, sDataURL, sCategoryKey, aValueKeys, sValueLabel, fCallback) {
+        var oGetters = {
+            "tsv": d3.tsv,
+            "csv": d3.csv
+        };
+        if (!oGetters.hasOwnProperty(sFileType)) {
+            console.log("Error in datautils.parseTable.");
+            return;
+        }
+        
+        if (typeof aValueKeys === "string") {
+            aValueKeys = [aValueKeys];
+        }
+        
+        (oGetters[sFileType])(sDataURL, function (aRowArray) {
+            var aCategories = [];
+            var aValueSeries = [];
+            var i = 0, j = 0;
+            
+            // initialize value series array
+            for (j = 0; j < aValueKeys.length; j++) {
+                aValueSeries.push({
+                    name: aValueKeys[j],
+                    items: []
+                });
+            }
+            
+            for (i = 0; i < aRowArray.length; i++) {
+                var oRow = aRowArray[i];
+                
+                // save category data
+                aCategories.push(oRow[sCategoryKey]);
+                
+                // save value data
+                for (j = 0; j < aValueKeys.length; j++) {
+                    var sValueKey = aValueKeys[j];
+                    aValueSeries[j].items.push(datautils.convertToNumber(oRow[sValueKey]));
+                }
+            }
+            var oFormatted = {
+                categoryLabel: sCategoryKey,
+                categories: aCategories,
+                valueSeries: aValueSeries,
+                valueLabel: sValueLabel
+            };
+            fCallback(oFormatted);
+        });
+    };
 
     /**
      * Convert string to number. Return null if conversion fails.
