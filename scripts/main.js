@@ -16,6 +16,8 @@ requirejs.config({
         'knockout': 'thirdparty/oraclejet/js/libs/knockout/knockout-3.4.0',
         'jquery': 'thirdparty/oraclejet/js/libs/jquery/jquery-2.1.3.min',
         'jqueryui-amd': 'thirdparty/oraclejet/js/libs/jquery/jqueryui-amd-1.11.4.min',
+        'react': 'thirdparty/react/react',
+        'react-dom': 'thirdparty/react/react-dom',
         'ojs': 'thirdparty/oraclejet/js/libs/oj/v2.0.1/min',
         'ojL10n': 'thirdparty/oraclejet/js/libs/oj/v2.0.1/ojL10n',
         'ojtranslations': 'thirdparty/oraclejet/js/libs/oj/v2.0.1/resources',
